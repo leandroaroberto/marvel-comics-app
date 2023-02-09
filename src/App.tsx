@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <div className="p-6 max-w-2xl mx-auto bg-white flex items-center space-x-4 content-center">
+      <div className="flex justify-between items-center">
         {
           comics.length ? comics.map((comic : any)  =>
             <Card
