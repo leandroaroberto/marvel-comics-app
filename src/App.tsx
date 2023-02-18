@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { api } from './api'
 import { Md5 } from 'ts-md5'
 import Card from './components/Card'
+import Header from './components/Header'
 
 const TIME_STAMP = Math.floor(Date.now() / 1000)
 const HASH = Md5.hashStr(TIME_STAMP + import.meta.env.VITE_API_PRIVATE_KEY + import.meta.env.VITE_API_PUBLIC_KEY)
@@ -11,7 +12,7 @@ function App() {
   const [comics, setComics] = useState([])
 
   useEffect(() => {
-    api.get(`/comics?limit=5?ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
+    api.get(`/comics?limit=10?ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
     .then(function (response: any) {
       setComics(response.data.data.results);
     })
@@ -22,19 +23,23 @@ function App() {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        {
-          comics.length ? comics.map((comic : any)  =>
-            <Card
-              key={comic.id}
-              title={comic.title}
-              description={comic.description}
-              image={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
-            />
-            )
+      <Header>
+        Marvel Comics App
+      </Header>
+      <div className="flex flex-wrap justify-evenly items-center max-w-full py-2 m-5">
+      {
+        comics.length ? comics.map((comic : any)  =>
+          <Card
+            key={comic.id}
+            title={comic.title}
+            image={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+          />
+          )
           :
+          <div className="flex justify-center items-center max-w-full">
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"/>
-        }
+          </div>
+      }
       </div>
     </>
   )
