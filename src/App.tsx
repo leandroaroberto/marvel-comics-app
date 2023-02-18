@@ -3,6 +3,7 @@ import { api } from './api'
 import { Md5 } from 'ts-md5'
 import Card from './components/Card'
 import Header from './components/Header'
+import Search from './components/Search'
 
 const TIME_STAMP = Math.floor(Date.now() / 1000)
 const HASH = Md5.hashStr(TIME_STAMP + import.meta.env.VITE_API_PRIVATE_KEY + import.meta.env.VITE_API_PUBLIC_KEY)
@@ -26,6 +27,7 @@ function App() {
       <Header>
         Marvel Comics App
       </Header>
+      <Search/>
       <div className="flex flex-wrap justify-evenly items-center max-w-full py-2 m-5">
       {
         comics.length ? comics.map((comic : any)  =>
