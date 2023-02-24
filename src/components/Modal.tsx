@@ -10,18 +10,35 @@ interface ModalProps {
     comicId: number;
 }
 
+interface ComicProps {
+  title ?: string;
+  images ?: any;
+  creators?: any;
+}
+
+interface ImageProps {
+  path?: string;
+  extension?: string;
+}
+
+interface CreatorsProps {
+  name : string;
+}
+
 const Modal = ({showModal, setShowModal, comicId} : ModalProps) => {
 
-  const [selectedComic, setSelectedComic] = useState({})
+  const [selectedComic, setSelectedComic] = useState <ComicProps>({})
 
   useEffect(() => {
-    api.get(`/comics/${comicId}?ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
-    .then(function (response: any) {
-      setSelectedComic(Object.assign({},response.data.data.results[0]))
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    if (comicId !== 0) {
+      api.get(`/comics/${comicId}?ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
+      .then(function (response: any) {
+        setSelectedComic(Object.assign({},response.data.data.results[0]))
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
   }, [comicId])
 
   return (
@@ -44,10 +61,10 @@ const Modal = ({showModal, setShowModal, comicId} : ModalProps) => {
                 <div className="relative p-6 flex-auto">
                   <h3 className="text-xl font-semibold">Images</h3>
                     {
-                      Object.keys(selectedComic.images).length ? <div className="flex justify-evenly p-4">
+                      Object.keys(selectedComic?.images ?? {}).length ? <div className="flex justify-evenly p-4">
                       {
-                        selectedComic.images.map(img =>
-                          <img src={`${img.path}/portrait_xlarge.${img.extension}`} />
+                        selectedComic.images.map((img: ImageProps, index: number) =>
+                          <img key={index} src={`${img.path}/portrait_xlarge.${img.extension}`} />
                           )
                       }
                         </div>
@@ -56,10 +73,10 @@ const Modal = ({showModal, setShowModal, comicId} : ModalProps) => {
                     }
                   <h3 className="text-xl font-semibold">Creators</h3>
                   {
-                    Object.keys(selectedComic.creators.items).length ?
+                    Object.keys(selectedComic?.creators?.items ?? {}).length ?
                       <ul className="mx-2">
                         {
-                          selectedComic.creators.items.map(item => <li className="list-disc mx-2"> {item.name} </li>)
+                          selectedComic.creators.items.map((item : CreatorsProps, index: number) => <li key={index} className="list-disc mx-2"> {item.name} </li>)
                         }
                       </ul>
                       :
