@@ -48,7 +48,7 @@ const Modal = ({showModal, setShowModal, comicId} : ModalProps) => {
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
-            <div className="relative w-auto my-6 mx-auto w-4xl">
+            <div className="relative my-6 w-3/5">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -61,10 +61,10 @@ const Modal = ({showModal, setShowModal, comicId} : ModalProps) => {
                 <div className="relative p-6 flex-auto">
                   <h3 className="text-xl font-semibold">Images</h3>
                     {
-                      Object.keys(selectedComic?.images ?? {}).length ? <div className="flex justify-evenly p-4">
+                      Object.keys(selectedComic?.images ?? {}).length ? <div className="flex flex-wrap justify-around p-4 max-w-5xl">
                       {
                         selectedComic.images.map((img: ImageProps, index: number) =>
-                          <img key={index} src={`${img.path}/portrait_xlarge.${img.extension}`} />
+                          <img key={index} src={`${img.path}/portrait_xlarge.${img.extension}`} className="border-1 rounded-md shadow-md p-1"/>
                           )
                       }
                         </div>
