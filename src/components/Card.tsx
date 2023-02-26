@@ -13,7 +13,7 @@ function Card({ title, image, onClick } : CardProps) {
       </p>
       <p className="text-center font-light py-4">
         <button
-          className="border-2 border-sky-100/100 rounded-md text-center bg-sky-500  hover:bg-white hover:text-black text-cyan-50 p-3"
+          className="button-blue"
           onClick={onClick}
         >
           More info
