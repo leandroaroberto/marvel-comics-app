@@ -18,7 +18,7 @@ function App() {
   const [comics, setComics] = useState([])
 
   useEffect(() => {
-    api.get(`/comics?limit=20?ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
+    api.get(`/comics?limit=20&ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
     .then(function (response: any) {
       setComics(response.data.data.results);
     })
