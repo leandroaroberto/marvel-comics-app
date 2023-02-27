@@ -18,20 +18,35 @@ function App() {
   const [comicId, setComicId] = useState(0);
   const [comics, setComics] = useState([]);
   const [offset, setOffset] = useState(0);
+  const [comicsTotalCount, setComicsTotalCount] = useState(0);
+  //const [loadingPage, setLoadingPage] = useState(true)
 
   useEffect(() => {
     api.get(`/comics?offset=${offset}&limit=10&ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
     .then(function (response: any) {
       setComics(response.data.data.results);
+      //setComicsTotalCount(response.data.data.total);
+      setComicsTotalCount(70);
     })
     .catch(function (error) {
       console.log(error);
     });
+    // .finally(function () {
+    //   setLoadingPage(false)
+    // });
   }, [offset])
 
   const showHeroDetails = (id: number ) => {
     setShowModal(true)
     setComicId(id)
+  }
+
+  const showLoadingPage = () => {
+    return (
+      <div className="flex justify-center items-center max-w-full">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"/>
+      </div>
+    )
   }
 
     return (
@@ -51,14 +66,14 @@ function App() {
         />
         )
         :
-        <div className="flex justify-center items-center max-w-full">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"/>
-          </div>
+        showLoadingPage()
       }
       </div>
-      <Pagination offset={offset} setOffset={setOffset}/>
+      {
+        comics.length && <Pagination offset={offset} setOffset={setOffset} total={comicsTotalCount}/>
+      }
       <Footer/>
-      <Modal showModal={showModal} setShowModal={setShowModal} comicId={comicId}/>
+      <Modal showModal={showModal} setShowModal={setShowModal} comicId={comicId} />
     </>
   )
 }

@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-
-const Pagination = ({offset, setOffset} : any) => {
+const Pagination = ({offset, setOffset, total} : any) => {
     const nextItem = () => {
-        setOffset(offset + 10)
+        setOffset(offset < total ? offset + 10: offset)
     }
 
     const previousItem = () => {
@@ -10,7 +8,7 @@ const Pagination = ({offset, setOffset} : any) => {
     }
 
   return (
-    <div className="flex justify-center py-2">
+    <div className="flex justify-center items-center py-2">
         <button
             className="button-blue disabled:button-disabled"
             disabled={offset === 0 ? true : false}
@@ -19,12 +17,12 @@ const Pagination = ({offset, setOffset} : any) => {
             Previous
         </button>
         <span className="px-5">
-            ...
+            ... {offset} from {total} ...
         </span>
         <button
-            className="button-blue"
+            className="button-blue disabled:button-disabled"
             onClick={nextItem}
-            disabled={false}
+            disabled={offset < total ? false : true}
         >
             Next
         </button>

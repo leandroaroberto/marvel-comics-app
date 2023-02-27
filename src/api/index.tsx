@@ -2,5 +2,5 @@ import axios from 'axios'
 
 export const api = axios.create({
     baseURL: 'http://gateway.marvel.com/v1/public',
-    timeout: 2000
+    timeout: 3000
   });
