@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { api } from './api'
 import { Md5 } from 'ts-md5'
-import Card from './components/Card'
-import Header from './components/Header'
-import Search from './components/Search'
-import Modal from './components/Modal'
-import Footer from './components/Footer'
-import Pagination from './components/Pagination'
+import Card from './components/Card/Card'
+import Header from './components/Header/Header'
+import Search from './components/Search/Search'
+import Modal from './components/Modal/Modal'
+import Footer from './components/Footer/Footer'
+import Pagination from './components/Pagination/Pagination'
 
 const TIME_STAMP = Math.floor(Date.now() / 1000)
 const HASH = Md5.hashStr(TIME_STAMP + import.meta.env.VITE_API_PRIVATE_KEY + import.meta.env.VITE_API_PUBLIC_KEY)

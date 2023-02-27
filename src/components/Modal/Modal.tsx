@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from "react";
-import { api } from '../api'
+import { api } from '../../api'
 import { Md5 } from 'ts-md5'
 
 const TIME_STAMP = Math.floor(Date.now() / 1000)
