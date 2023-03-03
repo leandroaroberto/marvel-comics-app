@@ -19,22 +19,21 @@ function App() {
   const [comics, setComics] = useState([]);
   const [offset, setOffset] = useState(0);
   const [comicsTotalCount, setComicsTotalCount] = useState(0);
-  //const [loadingPage, setLoadingPage] = useState(true)
+  const [characterId, setCharacterId] = useState(0); //1017320
+
+  const COMICS_API_PATH = '/comics'
+  const CHARACTERS_API_PATH = `characters/${characterId}/comics`
 
   useEffect(() => {
-    api.get(`/comics?offset=${offset}&limit=10&ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
+    api.get(`${characterId > 0 ? CHARACTERS_API_PATH : COMICS_API_PATH}?offset=${offset}&limit=10&ts=${TIME_STAMP}&apikey=${import.meta.env.VITE_API_PUBLIC_KEY}&hash=${HASH}`)
     .then(function (response: any) {
       setComics(response.data.data.results);
-      //setComicsTotalCount(response.data.data.total);
       setComicsTotalCount(70);
     })
     .catch(function (error) {
       console.log(error);
     });
-    // .finally(function () {
-    //   setLoadingPage(false)
-    // });
-  }, [offset])
+  }, [offset, characterId])
 
   const showHeroDetails = (id: number ) => {
     setShowModal(true)
@@ -54,7 +53,7 @@ function App() {
       <Header>
         Marvel Comics App
       </Header>
-      <Search/>
+      <Search setCharacterId={setCharacterId}/>
       <div className="flex flex-wrap justify-evenly items-center max-w-full py-2 m-5">
       {
         comics.length ? comics.map((comic : any)  =>
