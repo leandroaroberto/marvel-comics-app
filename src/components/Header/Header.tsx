@@ -6,7 +6,7 @@ type Props = {
 
 const Header = ({children} : Props ) => {
   return (
-    <div className="flex justify-center font-sans font-bold text-5xl py-4">
+    <div className="flex justify-center font-sans font-bold text-5xl py-4" data-testid="header">
         {children}
     </div>
   )
